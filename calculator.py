@@ -58,6 +58,21 @@ def sqrt(a):
     return result
 
 
+def quadratic_roots(a, b, c):
+    _validate_number(a, "a")
+    _validate_number(b, "b")
+    _validate_number(c, "c")
+    if a == 0:
+        raise ValueError("a must not be 0 for a quadratic equation")
+
+    d = b**2 - 4 * a * c
+    root1 = (-b + sqrt(d)) / (2 * a)
+    root2 = (-b - sqrt(d)) / (2 * a)
+
+    logger.info("quadratic_roots(%s, %s, %s) = (%s, %s)", a, b, c, root1, root2)
+    return root1, root2
+
+
 def _validate_number(x, name="value"):
     if not isinstance(x, (int, float)):
         raise TypeError(f"{name} must be int or float, got {type(x).__name__}")
@@ -69,6 +84,7 @@ def _save_history(entry: str) -> None:
         encoding="utf-8",
     )
 
+
 def _read_history() -> list[str]:
     if not HISTORY_FILE.exists():
         return []
@@ -78,10 +94,9 @@ def _read_history() -> list[str]:
 ]
 
 
-
 def main():
     print("Simple Calculator")
-    print("Available operations: +, -, *, /, sqrt, history")
+    print("Available operations: +, -, *, /, sqrt, history, quad")
     operation = input("Enter operation: ")
 
     if operation == "history":
@@ -98,6 +113,15 @@ def main():
         if operation == "sqrt":
             a = float(input("Enter number: "))
             result = sqrt(a)
+
+        elif operation == "quad":
+            a = float(input("Enter a: "))
+            b = float(input("Enter b: "))
+            c = float(input("Enter c: "))
+            r1, r2 = quadratic_roots(a, b, c)
+            result = f"roots: {r1}, {r2}"
+            _save_history(f"quadratic_roots({a}, {b}, {c}) = ({r1}, {r2})")
+
         elif operation in {"+", "-", "*", "/"}:
             a = float(input("Enter first number: "))
             b = float(input("Enter second number: "))
@@ -109,6 +133,7 @@ def main():
                 result = multiply(a, b)
             else:
                 result = divide(a, b)
+
         else:
             print("Invalid operation")
             return
@@ -117,6 +142,7 @@ def main():
 
     except (ValueError, TypeError) as e:
         print(f"Error: {e}")
+
 
 
 
