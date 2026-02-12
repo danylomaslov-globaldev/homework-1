@@ -43,6 +43,8 @@ def divide(a, b):
 
 def sqrt(a):
     _validate_number(a, "a")
+    if a < 0:
+        raise ValueError("Square root of a negative number is not supported")
     result = math.sqrt(a)
     logger.info("sqrt(%s) = %s", a, result)
     return result
@@ -57,25 +59,30 @@ def main():
     print("Available operations: +, -, *, /, sqrt")
     operation = input("Enter operation: ")
 
-    if operation == "sqrt":
-        a = float(input("Enter number: "))
-        result = sqrt(a)
-    elif operation in {"+", "-", "*", "/"}:
-        a = float(input("Enter first number: "))
-        b = float(input("Enter second number: "))
-        if operation == "+":
-            result = add(a, b)
-        elif operation == "-":
-            result = subtract(a, b)
-        elif operation == "*":
-            result = multiply(a, b)
+    try:
+        if operation == "sqrt":
+            a = float(input("Enter number: "))
+            result = sqrt(a)
+        elif operation in {"+", "-", "*", "/"}:
+            a = float(input("Enter first number: "))
+            b = float(input("Enter second number: "))
+            if operation == "+":
+                result = add(a, b)
+            elif operation == "-":
+                result = subtract(a, b)
+            elif operation == "*":
+                result = multiply(a, b)
+            else:
+                result = divide(a, b)
         else:
-            result = divide(a, b)
-    else:
-        print("Invalid operation")
-        return
+            print("Invalid operation")
+            return
 
-    print(f"Result: {result}")
+        print(f"Result: {result}")
+
+    except (ValueError, TypeError) as e:
+        print(f"Error: {e}")
+
 
 
 if __name__ == "__main__":
