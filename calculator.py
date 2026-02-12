@@ -7,24 +7,32 @@ logger = logging.getLogger(__name__)
 
 
 def add(a, b):
+    _validate_number(a, "a")
+    _validate_number(b, "b")
     result = a + b
     logger.info("add(%s, %s) = %s", a, b, result)
     return result
 
 
 def subtract(a, b):
+    _validate_number(a, "a")
+    _validate_number(b, "b")
     result = a - b
     logger.info("subtract(%s, %s) = %s", a, b, result)
     return result
 
 
 def multiply(a, b):
+    _validate_number(a, "a")
+    _validate_number(b, "b")
     result = a * b
     logger.info("multiply(%s, %s) = %s", a, b, result)
     return result
 
 
 def divide(a, b):
+    _validate_number(a, "a")
+    _validate_number(b, "b")
     if b == 0:
         logger.error("divide(%s, %s) - division by zero", a, b)
         raise ValueError("Cannot divide by zero")
@@ -34,10 +42,14 @@ def divide(a, b):
 
 
 def sqrt(a):
+    _validate_number(a, "a")
     result = math.sqrt(a)
     logger.info("sqrt(%s) = %s", a, result)
     return result
 
+def _validate_number(x, name="value"):
+    if not isinstance(x, (int, float)):
+        raise TypeError(f"{name} must be int or float, got {type(x).__name__}")
 
 
 def main():
