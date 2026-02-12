@@ -1,25 +1,43 @@
 import math
+import logging
+
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 def add(a, b):
-    return a + b
+    result = a + b
+    logger.info("add(%s, %s) = %s", a, b, result)
+    return result
 
 
 def subtract(a, b):
-    return a - b
+    result = a - b
+    logger.info("subtract(%s, %s) = %s", a, b, result)
+    return result
 
 
 def multiply(a, b):
-    return a * b
+    result = a * b
+    logger.info("multiply(%s, %s) = %s", a, b, result)
+    return result
 
 
 def divide(a, b):
     if b == 0:
+        logger.error("divide(%s, %s) - division by zero", a, b)
         raise ValueError("Cannot divide by zero")
-    return a / b
+    result = a / b
+    logger.info("divide(%s, %s) = %s", a, b, result)
+    return result
+
 
 def sqrt(a):
-    return math.sqrt(a)
+    result = math.sqrt(a)
+    logger.info("sqrt(%s) = %s", a, result)
+    return result
+
 
 
 def main():
